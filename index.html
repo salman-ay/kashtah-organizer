@@ -12,6 +12,7 @@
             --bg: #F8F9FA;
             --white: #FFFFFF;
             --danger: #e63946;
+            --gray: #ced4da;
         }
 
         body {
@@ -157,11 +158,37 @@
             padding: 12px 15px;
             border-bottom: 1px solid #f0f0f0;
             display: flex;
+            flex-wrap: wrap; /* Allows wrapping for small screens */
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
         .list-item:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
         .list-item:last-child { border-bottom: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+
+        .item-text {
+            font-size: 0.95rem;
+            flex: 1; /* Takes remaining space */
+            min-width: 120px;
+        }
+
+        /* Assignee Input Style */
+        .assignee-input {
+            border: 1px solid var(--gray);
+            background: #fdfdfd;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            width: 90px;
+            color: #555;
+            transition: 0.2s;
+        }
+        .assignee-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            background: white;
+            width: 110px; /* Expands when focused */
+        }
 
         /* Edit Mode Styles */
         .delete-btn {
@@ -277,36 +304,31 @@
     <script>
         // --- DATA STATE ---
         let currentSettings = { type: '', style: '', count: 4 };
+        // Structure: [{ cat: "...", items: [{text: "Rice", assignee: "Ahmed"}, ...] }]
         let activeList = []; 
         let isEditing = false;
         let historyStack = ['home-screen'];
 
-        // --- TEMPLATES DATABASE (UPDATED) ---
+        // --- TEMPLATES DATABASE ---
         const TEMPLATES = {
             land: {
                 cooking: [
                     { cat: "المقاضي", items: ["لحم/دجاج (250ج للشخص)", "رز (نص كوب للشخص)", "بصل وطماطم", "بهارات وملح", "زيت", "ماء طبخ"] },
-                    // Added: Badya, Dharaya, Bayz, Trash bags
                     { cat: "عدة الطبخ", items: ["قدر طبخ", "بادية (غسيل رز ونقع)", "ذراية (مصد هواء)", "بيز (مساكة)", "مغرفة وملاس", "سكين ولوح تقطيع", "صحون وملاعق", "سفرة طعام", "دافور كبير/غاز", "أكياس نفايات"] },
                     { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر"] },
-                    // Added: Bayz, Dharaya (common needs)
                     { cat: "عزبة القهوة", items: ["لقمة (مفواح)", "دلة قهوة", "إبريق شاهي", "بيز", "زمزمية (ترمس)", "فناجيل وبيالات", "ماء صحة"] },
-                    // Added: Manqad, Milqat
                     { cat: "شبّة الضو", items: ["منقد", "حطب/فحم", "ملقاط", "ولاعة ومكعبات"] },
                     { cat: "الجلسة", items: ["فرشة", "مساند/مراكى", "لمبة سنارة"] }
                 ],
                 prep_drinks: [
                     { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر", "ماء صحة", "تمر"] },
-                    // Added: Dharaya, Bayz, Trash bags
                     { cat: "عدة التحضير", items: ["دافور صغير", "ذراية (مصد هواء)", "بيز", "لقمة (مفواح)", "إبريق شاهي", "أكياس نفايات"] },
                     { cat: "التقديم", items: ["دلة قهوة", "زمزمية قهوة", "زمزمية شاهي", "فناجيل وبيالات"] },
-                    // Added: Manqad, Milqat
                     { cat: "الجلسة وشبّة الضو", items: ["منقد", "ملقاط", "فرشة", "مساند", "حطب (اذا فيه شبة)"] }
                 ],
                 ready_drinks: [
                     { cat: "المشروبات", items: ["زمزمية قهوة (مليانة)", "زمزمية شاي (مليانة)", "ماء بارد"] },
                     { cat: "سناكس", items: ["تمر", "مكسرات", "فطائر", "شيبسات"] },
-                    // Added: Trash bags
                     { cat: "أغراض", items: ["فناجيل وكاسات", "مناديل", "أكياس نفايات"] },
                     { cat: "الجلسة", items: ["فرشة خفيفة", "كراسي"] }
                 ]
@@ -314,13 +336,11 @@
             sea: {
                 cooking: [
                     { cat: "عشاء", items: ["سمك/مشاوي", "خبز", "بهارات", "سلطات"] },
-                    // Added: Trash bags, Milqat for BBQ
                     { cat: "شوي", items: ["منقل شوي", "فحم", "ملقاط", "أسياخ/شبك", "هواية", "أكياس نفايات"] },
                     { cat: "القهوة", items: ["دلة", "لقمة", "بيز", "قهوة وهيل", "ترامس"] },
                     { cat: "جلسة", items: ["كراسي (عدد الأشخاص)", "طاولة", "فرشة"] }
                 ],
                 prep_drinks: [
-                    // Added: Trash bags, Bayz, Dharaya
                     { cat: "عزبة القهوة", items: ["دافور", "ذراية", "بيز", "لقمة", "دلة", "إبريق شاهي", "زمزمية", "أكياس نفايات"] },
                     { cat: "المكونات", items: ["قهوة مطحونة", "هيل", "شاي وسكر", "ماء"] },
                     { cat: "جلسة", items: ["كراسي", "طاولة صغيرة"] }
@@ -387,10 +407,16 @@
             currentSettings.count = document.getElementById('people-count').value;
             let template = TEMPLATES[currentSettings.type]?.[currentSettings.style] || TEMPLATES.land.cooking;
             
+            // Map items to Object Structure {text, assignee}
             activeList = template.map(section => {
                 return {
                     cat: section.cat,
-                    items: section.items.map(item => item.replace("عدد الأشخاص", currentSettings.count))
+                    items: section.items.map(itemStr => {
+                        return {
+                            text: itemStr.replace("عدد الأشخاص", currentSettings.count),
+                            assignee: "" // Empty by default
+                        };
+                    })
                 };
             });
 
@@ -417,13 +443,17 @@
                 let html = `<div class="list-section">
                                 <div class="section-title">${section.cat}</div>`;
                 section.items.forEach((item, itemIdx) => {
-                    html += `<div class="list-item">`;
+                    html += `<div class="list-item">
+                                <span class="item-text">${item.text}</span>
+                                
+                                <input type="text" class="assignee-input" placeholder="مين بيجيب؟" 
+                                    value="${item.assignee}" 
+                                    oninput="updateAssignee(${secIdx}, ${itemIdx}, this.value)">`;
+
                     if(isEditing) {
-                        html += `<span>${item}</span>
-                                 <span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">🗑️</span>`;
+                        html += `<span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">🗑️</span>`;
                     } else {
-                        html += `<span>${item}</span>
-                                 <input type="checkbox" style="width:20px; height:20px;">`;
+                        html += `<input type="checkbox" style="width:20px; height:20px;">`;
                     }
                     html += `</div>`;
                 });
@@ -437,6 +467,11 @@
                 html += `</div>`;
                 container.innerHTML += html;
             });
+        }
+
+        // --- LOGIC FUNCTIONS ---
+        function updateAssignee(secIdx, itemIdx, value) {
+            activeList[secIdx].items[itemIdx].assignee = value;
         }
 
         function toggleEditMode() {
@@ -453,7 +488,8 @@
             const input = document.getElementById(`new-item-${secIdx}`);
             const val = input.value.trim();
             if(val) {
-                activeList[secIdx].items.push(val);
+                // Add new object
+                activeList[secIdx].items.push({ text: val, assignee: "" });
                 renderList(); 
             }
         }
@@ -525,7 +561,14 @@
             activeList.forEach(section => {
                 if(section.items.length > 0) {
                     text += `*${section.cat}*\n`;
-                    section.items.forEach(item => text += `- ${item}\n`);
+                    section.items.forEach(item => {
+                        text += `- ${item.text}`;
+                        // If assignee exists, add it
+                        if(item.assignee && item.assignee.trim() !== "") {
+                            text += ` (👤 ${item.assignee})`;
+                        }
+                        text += `\n`;
+                    });
                     text += `\n`;
                 }
             });
