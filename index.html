@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>كشتة | جهّز كشتتك</title>
+    <style>
+        :root {
+            --primary: #2D6A4F;
+            --accent: #D8F3DC;
+            --text: #1B4332;
+            --bg: #F8F9FA;
+            --white: #FFFFFF;
+            --danger: #e63946;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { 
+            font-size: 1.4rem; /* Increased slightly for Arabic */
+            font-weight: 800; 
+            color: var(--primary); 
+            cursor: pointer;
+        }
+        
+        .back-btn { font-size: 1.5rem; cursor: pointer; border: none; background: none; padding: 0;}
+
+        .screen {
+            display: none;
+            flex: 1;
+            padding: 20px;
+            flex-direction: column;
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+        }
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Buttons */
+        .btn-main {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .btn-secondary.active-edit {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Cards & Lists */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .card:active { transform: scale(0.98); }
+        .card h3 { font-size: 1.1rem; margin: 0 0 5px 0; }
+        .card p { color: #666; font-size: 0.85rem; margin: 0; }
+        .emoji-icon { font-size: 2rem; }
+
+        /* Saved List Item */
+        .saved-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .saved-info h4 { margin: 0 0 5px 0; }
+        .saved-info span { font-size: 0.8rem; color: #888; }
+        .delete-saved-btn { color: var(--danger); background: none; border: none; font-size: 1.2rem; padding: 10px; cursor: pointer;}
+
+        /* List Items */
+        .list-section { margin-bottom: 25px; }
+        .section-title { 
+            font-size: 0.95rem; 
+            color: var(--primary); 
+            margin-bottom: 10px; 
+            font-weight: bold;
+            background: #eef5f2;
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .list-item {
+            background: white;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-item:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
+        .list-item:last-child { border-bottom: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+
+        /* Edit Mode Styles */
+        .delete-btn {
+            color: var(--danger);
+            cursor: pointer;
+            font-weight: bold;
+            padding: 5px 10px;
+        }
+        .add-row {
+            display: flex;
+            padding: 10px;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+            gap: 10px;
+        }
+        .add-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .add-btn-small {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            width: 35px;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            width: 100%; padding: 15px; font-size: 1.5rem; text-align: center;
+            border: 2px solid #ddd; border-radius: 12px; margin: 20px 0; box-sizing: border-box;
+        }
+
+        .hidden { display: none !important; }
+        .empty-state { text-align: center; padding: 30px; color: #aaa; background: #f0f0f0; border-radius: 12px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header id="app-header">
+        <button class="back-btn hidden" onclick="goBack()">←</button>
+        <div class="logo" onclick="goToHome()">كشتة ⛺</div>
+        <div style="width: 24px;"></div>
+    </header>
+
+    <div id="home-screen" class="screen active">
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+            <span style="font-size: 3.5rem;">🏕️</span>
+            <h1>جهّز كشتتك</h1>
+            <p style="color: #666;">رتّب أغراضك ولا تنسى شي</p>
+        </div>
+
+        <button class="btn-main" onclick="nextScreen('type-screen')" style="margin-top:0; margin-bottom: 30px;">➕ جهّز كشتة جديدة</button>
+
+        <h3 style="margin-bottom: 10px;">كشاتك المحفوظة 📂</h3>
+        <div id="saved-list-container">
+            </div>
+    </div>
+
+    <div id="type-screen" class="screen">
+        <h2>وش نوع الكشتة؟</h2>
+        <div style="margin-top: 20px;">
+            <div class="card" onclick="selectType('land')">
+                <span class="emoji-icon">🌵</span>
+                <div><h3>كشتة بر</h3><p>خلاء، رمل، وجلسة أرضية</p></div>
+            </div>
+            <div class="card" onclick="selectType('sea')">
+                <span class="emoji-icon">🏖️</span>
+                <div><h3>كشتة بحر</h3><p>شاطئ، رطوبة، وجلسة كراسي</p></div>
+            </div>
+            <div class="card" onclick="selectType('chalet')">
+                <span class="emoji-icon">🏡</span>
+                <div><h3>شاليه / استراحة</h3><p>مكان مجهز، كهرباء متوفرة</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="style-screen" class="screen">
+        <h2>نظام الأكل والشرب؟</h2>
+        <div style="margin-top: 20px;">
+            <div class="card" onclick="selectStyle('cooking')">
+                <span class="emoji-icon">🍳</span>
+                <div><h3>مع طبخ ونفخ</h3><p>غداء/عشاء، قدور، ومكونات</p></div>
+            </div>
+            <div class="card" onclick="selectStyle('prep_drinks')">
+                <span class="emoji-icon">🔥</span>
+                <div><h3>بدون طبخ (تحضير قهوة)</h3><p>بنجيب الدلة والمعاميل ونضبطها</p></div>
+            </div>
+            <div class="card" onclick="selectStyle('ready_drinks')">
+                <span class="emoji-icon">☕</span>
+                <div><h3>بدون طبخ (جاهز)</h3><p>نجيب الترامس جاهزة معنا</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="count-screen" class="screen">
+        <h2>كم عددكم؟</h2>
+        <p style="color: #666;">عشان نضبط لك الكميات (تقريبي)</p>
+        <input type="number" id="people-count" value="4" min="1">
+        <button class="btn-main" onclick="generateNewList()">جهّز القائمة 🚀</button>
+    </div>
+
+    <div id="list-screen" class="screen">
+        <div class="action-bar">
+            <button class="btn-secondary" onclick="toggleEditMode()" id="edit-btn">✏️ تعديل</button>
+            <button class="btn-secondary" onclick="saveCurrentList()">💾 حفظ</button>
+            <button class="btn-secondary" onclick="copyToClipboard()">📤 نسخ</button>
+        </div>
+        
+        <div id="list-container" style="padding-bottom: 80px;"></div>
+    </div>
+
+    <script>
+        // --- DATA STATE ---
+        let currentSettings = { type: '', style: '', count: 4 };
+        let activeList = []; // Array of sections [{cat: '...', items: ['...']}]
+        let isEditing = false;
+        let historyStack = ['home-screen'];
+
+        // --- TEMPLATES DATABASE ---
+        const TEMPLATES = {
+            land: {
+                cooking: [
+                    { cat: "المقاضي", items: ["لحم/دجاج (250ج للشخص)", "رز (نص كوب للشخص)", "بصل وطماطم", "بهارات وملح", "زيت", "ماء طبخ"] },
+                    { cat: "عدة الطبخ", items: ["قدر طبخ", "مغرفة وملاس", "سكين ولوح تقطيع", "صحون وملاعق", "سفرة طعام", "دافور كبير/غاز"] },
+                    { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي (تلقيمة/أكياس)", "سكر"] },
+                    { cat: "عزبة القهوة", items: ["لقمة (مفواح)", "دلة قهوة", "إبريق شاهي", "زمزمية (ترمس)", "فناجيل وبيالات", "ماء صحة"] },
+                    { cat: "شبّة الضو", items: ["حطب/فحم", "ولاعة ومكعبات", "منقاش"] },
+                    { cat: "الجلسة", items: ["فرشة", "مساند/مراكى", "لمبة سنارة"] }
+                ],
+                prep_drinks: [
+                    { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر", "ماء صحة", "تمر"] },
+                    { cat: "عدة التحضير", items: ["دافور صغير", "لقمة (مفواح)", "إبريق شاهي", "بيز", "ذراية"] },
+                    { cat: "التقديم", items: ["دلة قهوة", "زمزمية قهوة", "زمزمية شاهي", "فناجيل وبيالات", "كيس نفايات"] },
+                    { cat: "الجلسة", items: ["فرشة", "مساند", "حطب (اذا فيه شبة)"] }
+                ],
+                ready_drinks: [
+                    { cat: "المشروبات", items: ["زمزمية قهوة (مليانة)", "زمزمية شاي (مليانة)", "ماء بارد"] },
+                    { cat: "سناكس", items: ["تمر", "مكسرات", "فطائر", "شيبسات"] },
+                    { cat: "أغراض", items: ["فناجيل وكاسات", "مناديل", "كيس نفايات"] },
+                    { cat: "الجلسة", items: ["فرشة خفيفة", "كراسي"] }
+                ]
+            },
+            sea: {
+                cooking: [
+                    { cat: "عشاء", items: ["سمك/مشاوي", "خبز", "بهارات", "سلطات"] },
+                    { cat: "شوي", items: ["منقل شوي", "فحم", "أسياخ/شبك", "هواية"] },
+                    { cat: "القهوة", items: ["دلة", "لقمة", "قهوة وهيل", "ترامس"] },
+                    { cat: "جلسة", items: ["كراسي (عدد الأشخاص)", "طاولة", "فرشة"] }
+                ],
+                prep_drinks: [
+                    { cat: "عزبة القهوة", items: ["دافور", "لقمة", "دلة", "إبريق شاهي", "زمزمية"] },
+                    { cat: "المكونات", items: ["قهوة مطحونة", "هيل", "شاي وسكر", "ماء"] },
+                    { cat: "جلسة", items: ["كراسي", "طاولة صغيرة"] }
+                ],
+                ready_drinks: [ /* Simplified for demo */ ]
+            }
+        };
+        TEMPLATES.chalet = TEMPLATES.land;
+        // Fix empty Sea/Ready for demo safety
+        if(!TEMPLATES.sea.ready_drinks) TEMPLATES.sea.ready_drinks = TEMPLATES.land.ready_drinks;
+
+
+        // --- INIT ---
+        window.onload = function() {
+            renderSavedLists();
+        };
+
+        // --- NAVIGATION ---
+        function nextScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            historyStack.push(screenId);
+            updateHeader();
+        }
+
+        function goBack() {
+            if (historyStack.length > 1) {
+                historyStack.pop();
+                let prevScreen = historyStack[historyStack.length - 1];
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(prevScreen).classList.add('active');
+                updateHeader();
+            }
+        }
+
+        function goToHome() {
+            historyStack = ['home-screen'];
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('home-screen').classList.add('active');
+            updateHeader();
+            renderSavedLists(); // Refresh saved lists
+        }
+
+        function updateHeader() {
+            document.querySelector('.back-btn').classList.toggle('hidden', historyStack.length <= 1);
+        }
+
+        // --- WIZARD ACTIONS ---
+        function selectType(type) {
+            currentSettings.type = type;
+            nextScreen('style-screen');
+        }
+
+        function selectStyle(style) {
+            currentSettings.style = style;
+            nextScreen('count-screen');
+        }
+
+        // --- LIST GENERATION ---
+        function generateNewList() {
+            currentSettings.count = document.getElementById('people-count').value;
+            
+            // Deep copy the template to activeList
+            let template = TEMPLATES[currentSettings.type]?.[currentSettings.style] || TEMPLATES.land.cooking;
+            
+            // Process the strings (replace count) and create a clean object
+            activeList = template.map(section => {
+                return {
+                    cat: section.cat,
+                    items: section.items.map(item => item.replace("عدد الأشخاص", currentSettings.count))
+                };
+            });
+
+            isEditing = false;
+            renderList();
+            nextScreen('list-screen');
+        }
+
+        // --- LIST RENDERING & EDITING ---
+        function renderList() {
+            const container = document.getElementById('list-container');
+            container.innerHTML = "";
+            const editBtn = document.getElementById('edit-btn');
+            
+            if(isEditing) {
+                editBtn.classList.add('active-edit');
+                editBtn.innerHTML = "✅ تم";
+            } else {
+                editBtn.classList.remove('active-edit');
+                editBtn.innerHTML = "✏️ تعديل";
+            }
+
+            activeList.forEach((section, secIdx) => {
+                let html = `<div class="list-section">
+                                <div class="section-title">${section.cat}</div>`;
+                
+                // Render Items
+                section.items.forEach((item, itemIdx) => {
+                    html += `<div class="list-item">`;
+                    
+                    if(isEditing) {
+                        // Edit Mode: Delete Icon + Text
+                        html += `<span>${item}</span>
+                                 <span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">🗑️</span>`;
+                    } else {
+                        // View Mode: Text + Checkbox
+                        html += `<span>${item}</span>
+                                 <input type="checkbox" style="width:20px; height:20px;">`;
+                    }
+                    html += `</div>`;
+                });
+
+                // Edit Mode: Add new item input
+                if(isEditing) {
+                    html += `<div class="add-row">
+                                <input type="text" placeholder="غرض جديد..." class="add-input" id="new-item-${secIdx}">
+                                <button class="add-btn-small" onclick="addItem(${secIdx})">＋</button>
+                             </div>`;
+                }
+
+                html += `</div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            renderList();
+        }
+
+        function deleteItem(secIdx, itemIdx) {
+            activeList[secIdx].items.splice(itemIdx, 1);
+            renderList();
+        }
+
+        function addItem(secIdx) {
+            const input = document.getElementById(`new-item-${secIdx}`);
+            const val = input.value.trim();
+            if(val) {
+                activeList[secIdx].items.push(val);
+                renderList(); 
+            }
+        }
+
+        // --- SAVING & LOADING ---
+        function saveCurrentList() {
+            let name = prompt("وش حاب تسمي القائمة؟", "كشتة الجمعة");
+            if(name) {
+                let saved = JSON.parse(localStorage.getItem('keshta_saved') || "[]");
+                saved.push({
+                    id: Date.now(),
+                    name: name,
+                    date: new Date().toLocaleDateString('ar-SA'),
+                    list: activeList,
+                    count: currentSettings.count
+                });
+                localStorage.setItem('keshta_saved', JSON.stringify(saved));
+                alert("تم الحفظ بنجاح! ✅");
+                goToHome();
+            }
+        }
+
+        function renderSavedLists() {
+            const container = document.getElementById('saved-list-container');
+            let saved = JSON.parse(localStorage.getItem('keshta_saved') || "[]");
+            
+            if(saved.length === 0) {
+                container.innerHTML = `<div class="empty-state">ما فيه كشات محفوظة</div>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            // Show newest first
+            saved.reverse().forEach((list, index) => {
+                // Adjust index for original array
+                let realIndex = saved.length - 1 - index; 
+                
+                let html = `<div class="saved-item">
+                                <div onclick="loadSavedList(${realIndex})" style="flex:1; cursor:pointer;">
+                                    <div class="saved-info">
+                                        <h4>${list.name}</h4>
+                                        <span>📅 ${list.date} • 👥 ${list.count} أشخاص</span>
+                                    </div>
+                                </div>
+                                <button class="delete-saved-btn" onclick="deleteSavedList(${realIndex})">🗑️</button>
+                            </div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function loadSavedList(index) {
+            let saved = JSON.parse(localStorage.getItem('keshta_saved'));
+            activeList = saved[index].list;
+            currentSettings.count = saved[index].count;
+            
+            isEditing = false;
+            renderList();
+            nextScreen('list-screen');
+        }
+
+        function deleteSavedList(index) {
+            if(confirm("متأكد تبي تحذف هالقائمة؟")) {
+                let saved = JSON.parse(localStorage.getItem('keshta_saved'));
+                saved.splice(index, 1);
+                localStorage.setItem('keshta_saved', JSON.stringify(saved));
+                renderSavedLists();
+            }
+        }
+
+        // --- COPY ---
+        function copyToClipboard() {
+            let text = `🏕️ *قائمة كشتة: ${currentSettings.count} أشخاص*\n\n`;
+            activeList.forEach(section => {
+                if(section.items.length > 0) {
+                    text += `*${section.cat}*\n`;
+                    section.items.forEach(item => text += `- ${item}\n`);
+                    text += `\n`;
+                }
+            });
+            text += `_تم التجهيز عبر تطبيق كشتة_`;
+            navigator.clipboard.writeText(text).then(() => alert("تم النسخ للواتس! ✅"));
+        }
+    </script>
+</body>
+</html>
