@@ -26,6 +26,7 @@
             flex-direction: column;
         }
 
+        /* --- UI COMPONENTS --- */
         header {
             background-color: var(--white);
             padding: 15px 20px;
@@ -37,193 +38,104 @@
             top: 0;
             z-index: 100;
         }
-
-        .logo { 
-            font-size: 1.4rem;
-            font-weight: 800; 
-            color: var(--primary); 
-            cursor: pointer;
-        }
-        
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); cursor: pointer; }
         .back-btn { font-size: 1.5rem; cursor: pointer; border: none; background: none; padding: 0;}
 
         .screen {
-            display: none;
-            flex: 1;
-            padding: 20px;
-            flex-direction: column;
-            animation: fadeIn 0.3s ease;
-            overflow-y: auto;
+            display: none; flex: 1; padding: 20px; flex-direction: column;
+            animation: fadeIn 0.3s ease; overflow-y: auto;
         }
         .screen.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Buttons */
         .btn-main {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
+            background-color: var(--primary); color: white; border: none; padding: 16px;
+            border-radius: 12px; font-size: 1.1rem; font-weight: bold; width: 100%;
+            cursor: pointer; margin-top: 20px; box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
         }
 
-        .action-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
+        .action-bar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .btn-secondary {
-            background-color: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            flex: 1;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            background-color: white; color: var(--primary); border: 1px solid var(--primary);
+            padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer;
+            font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 5px;
         }
-        
-        .btn-secondary.active-edit {
-            background-color: var(--primary);
-            color: white;
-        }
+        .btn-secondary.active-edit { background-color: var(--primary); color: white; }
 
-        /* Cards & Lists */
         .card {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            border: 1px solid #eee;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #eee; cursor: pointer;
+            transition: 0.2s; display: flex; align-items: center; gap: 15px;
         }
         .card:active { transform: scale(0.98); }
         .card h3 { font-size: 1.1rem; margin: 0 0 5px 0; }
         .card p { color: #666; font-size: 0.85rem; margin: 0; }
         .emoji-icon { font-size: 2rem; }
 
-        /* Saved List Item */
         .saved-item {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid var(--primary);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background: white; padding: 15px; border-radius: 12px; margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-left: 5px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .saved-info h4 { margin: 0 0 5px 0; }
         .saved-info span { font-size: 0.8rem; color: #888; }
         .delete-saved-btn { color: var(--danger); background: none; border: none; font-size: 1.2rem; padding: 10px; cursor: pointer;}
 
-        /* List Items */
+        /* LIST STYLES */
         .list-section { margin-bottom: 25px; }
         .section-title { 
-            font-size: 0.95rem; 
-            color: var(--primary); 
-            margin-bottom: 10px; 
-            font-weight: bold;
-            background: #eef5f2;
-            padding: 5px 10px;
-            border-radius: 8px;
-            display: inline-block;
+            font-size: 0.95rem; color: var(--primary); margin-bottom: 10px; font-weight: bold;
+            background: #eef5f2; padding: 5px 10px; border-radius: 8px; display: inline-block;
         }
         
         .list-item {
-            background: white;
-            padding: 12px 15px;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            flex-wrap: wrap; /* Allows wrapping for small screens */
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
+            background: white; padding: 10px 15px; border-bottom: 1px solid #f0f0f0;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
         }
         .list-item:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
         .list-item:last-child { border-bottom: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
 
-        .item-text {
-            font-size: 0.95rem;
-            flex: 1; /* Takes remaining space */
-            min-width: 120px;
+        .item-content { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 150px; }
+        .item-icon { font-size: 1.4rem; cursor: default; }
+        .item-icon.editable { cursor: pointer; background: #eee; border-radius: 50%; width: 35px; height: 35px; text-align: center; line-height: 35px; }
+        .item-text { font-size: 0.95rem; }
+        .item-input-edit {
+            border: 1px solid var(--primary); padding: 5px; border-radius: 5px; font-size: 0.9rem; width: 100%;
         }
 
-        /* Assignee Input Style */
         .assignee-input {
-            border: 1px solid var(--gray);
-            background: #fdfdfd;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 0.8rem;
-            width: 90px;
-            color: #555;
-            transition: 0.2s;
+            border: 1px solid var(--gray); background: #fdfdfd; border-radius: 6px;
+            padding: 6px 10px; font-size: 0.8rem; width: 90px; color: #555; transition: 0.2s;
         }
-        .assignee-input:focus {
-            border-color: var(--primary);
-            outline: none;
-            background: white;
-            width: 110px; /* Expands when focused */
-        }
+        .assignee-input:focus { border-color: var(--primary); outline: none; background: white; width: 110px; }
 
-        /* Edit Mode Styles */
-        .delete-btn {
-            color: var(--danger);
-            cursor: pointer;
-            font-weight: bold;
-            padding: 5px 10px;
-        }
-        .add-row {
-            display: flex;
-            padding: 10px;
-            background: #f9f9f9;
-            border-top: 1px solid #eee;
-            gap: 10px;
-        }
-        .add-input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-        .add-btn-small {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            width: 35px;
-            cursor: pointer;
-        }
+        .delete-btn { color: var(--danger); cursor: pointer; font-weight: bold; padding: 5px; font-size: 1.1rem; }
+        
+        .add-row { display: flex; padding: 10px; background: #f9f9f9; border-top: 1px solid #eee; gap: 10px; }
+        .add-input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+        .add-btn-small { background: var(--primary); color: white; border: none; border-radius: 6px; width: 35px; cursor: pointer; }
 
-        input[type="number"] {
-            width: 100%; padding: 15px; font-size: 1.5rem; text-align: center;
-            border: 2px solid #ddd; border-radius: 12px; margin: 20px 0; box-sizing: border-box;
+        /* MODALS */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000;
         }
+        .modal-box {
+            background: white; padding: 20px; border-radius: 16px; width: 90%; max-width: 350px;
+            text-align: center; max-height: 80vh; overflow-y: auto;
+        }
+        .modal-title { font-weight: bold; margin-bottom: 15px; display: block; }
+        .icon-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .icon-option { font-size: 1.5rem; cursor: pointer; padding: 5px; border-radius: 8px; }
+        .icon-option:hover { background: #eee; }
+        
+        .copy-option-btn {
+            display: block; width: 100%; padding: 15px; margin-bottom: 10px;
+            border: 1px solid #ddd; border-radius: 12px; background: #fff; font-size: 1rem; cursor: pointer;
+        }
+        .copy-option-btn:hover { background: #f9f9f9; border-color: var(--primary); }
 
+        input[type="number"] { width: 100%; padding: 15px; font-size: 1.5rem; text-align: center; border: 2px solid #ddd; border-radius: 12px; margin: 20px 0; box-sizing: border-box; }
         .hidden { display: none !important; }
         .empty-state { text-align: center; padding: 30px; color: #aaa; background: #f0f0f0; border-radius: 12px; margin-top: 10px; }
     </style>
@@ -242,9 +154,7 @@
             <h1>جهّز كشتتك</h1>
             <p style="color: #666;">رتّب أغراضك ولا تنسى شي</p>
         </div>
-
         <button class="btn-main" onclick="nextScreen('type-screen')" style="margin-top:0; margin-bottom: 30px;">➕ جهّز كشتة جديدة</button>
-
         <h3 style="margin-bottom: 10px;">كشاتك المحفوظة 📂</h3>
         <div id="saved-list-container"></div>
     </div>
@@ -253,16 +163,13 @@
         <h2>وش نوع الكشتة؟</h2>
         <div style="margin-top: 20px;">
             <div class="card" onclick="selectType('land')">
-                <span class="emoji-icon">🌵</span>
-                <div><h3>كشتة بر</h3><p>خلاء، رمل، وجلسة أرضية</p></div>
+                <span class="emoji-icon">🌵</span><div><h3>كشتة بر</h3><p>خلاء، رمل، وجلسة أرضية</p></div>
             </div>
             <div class="card" onclick="selectType('sea')">
-                <span class="emoji-icon">🏖️</span>
-                <div><h3>كشتة بحر</h3><p>شاطئ، رطوبة، وجلسة كراسي</p></div>
+                <span class="emoji-icon">🏖️</span><div><h3>كشتة بحر</h3><p>شاطئ، رطوبة، وجلسة كراسي</p></div>
             </div>
             <div class="card" onclick="selectType('chalet')">
-                <span class="emoji-icon">🏡</span>
-                <div><h3>شاليه / استراحة</h3><p>مكان مجهز، كهرباء متوفرة</p></div>
+                <span class="emoji-icon">🏡</span><div><h3>شاليه / استراحة</h3><p>مكان مجهز، كهرباء متوفرة</p></div>
             </div>
         </div>
     </div>
@@ -271,16 +178,13 @@
         <h2>نظام الأكل والشرب؟</h2>
         <div style="margin-top: 20px;">
             <div class="card" onclick="selectStyle('cooking')">
-                <span class="emoji-icon">🍳</span>
-                <div><h3>مع طبخ ونفخ</h3><p>غداء/عشاء، قدور، ومكونات</p></div>
+                <span class="emoji-icon">🍳</span><div><h3>مع طبخ ونفخ</h3><p>غداء/عشاء، قدور، ومكونات</p></div>
             </div>
             <div class="card" onclick="selectStyle('prep_drinks')">
-                <span class="emoji-icon">🔥</span>
-                <div><h3>بدون طبخ (تحضير قهوة)</h3><p>بنجيب الدلة والمعاميل ونضبطها</p></div>
+                <span class="emoji-icon">🔥</span><div><h3>بدون طبخ (تحضير قهوة)</h3><p>بنجيب الدلة والمعاميل ونضبطها</p></div>
             </div>
             <div class="card" onclick="selectStyle('ready_drinks')">
-                <span class="emoji-icon">☕</span>
-                <div><h3>بدون طبخ (جاهز)</h3><p>نجيب الترامس جاهزة معنا</p></div>
+                <span class="emoji-icon">☕</span><div><h3>بدون طبخ (جاهز)</h3><p>نجيب الترامس جاهزة معنا</p></div>
             </div>
         </div>
     </div>
@@ -296,79 +200,123 @@
         <div class="action-bar">
             <button class="btn-secondary" onclick="toggleEditMode()" id="edit-btn">✏️ تعديل</button>
             <button class="btn-secondary" onclick="saveCurrentList()">💾 حفظ</button>
-            <button class="btn-secondary" onclick="copyToClipboard()">📤 نسخ</button>
+            <button class="btn-secondary" onclick="showCopyModal()">📤 نسخ</button>
         </div>
         <div id="list-container" style="padding-bottom: 80px;"></div>
     </div>
 
+    <div id="icon-modal" class="modal-overlay" onclick="closeIconModal(event)">
+        <div class="modal-box">
+            <span class="modal-title">اختر أيقونة</span>
+            <div class="icon-grid" id="icon-grid">
+                </div>
+        </div>
+    </div>
+
+    <div id="copy-modal" class="modal-overlay" onclick="closeCopyModal(event)">
+        <div class="modal-box">
+            <span class="modal-title">كيف حاب تنسخ القائمة؟</span>
+            <button class="copy-option-btn" onclick="copyToClipboard('category')">📄 حسب القائمة (التصنيف)</button>
+            <button class="copy-option-btn" onclick="copyToClipboard('person')">👤 حسب الأشخاص</button>
+        </div>
+    </div>
+
     <script>
-        // --- DATA STATE ---
+        // --- DATA & CONFIG ---
         let currentSettings = { type: '', style: '', count: 4 };
-        // Structure: [{ cat: "...", items: [{text: "Rice", assignee: "Ahmed"}, ...] }]
         let activeList = []; 
         let isEditing = false;
         let historyStack = ['home-screen'];
+        
+        let editingItemIndices = { sec: null, item: null };
 
-        // --- TEMPLATES DATABASE ---
+        const ICONS_LIST = [
+            "🍖", "🍗", "🍚", "🧅", "🧂", "🫗", "🍲", "🪵", "🔪", "🥣", "🥢", "🧊", "🗑️",
+            "☕", "🫖", "🥛", "🌿", "🍬", "🧂", "🔥", "🧱", "🏮", "🛋️", "🧴", "🩹", "🔦",
+            "🧴", "🕶️", "⛱️", "🏖️", "🎣", "🦐", "🌭", "🍔", "🥪", "🥤", "⛺", "🚙", "🪑"
+        ];
+
+        // --- TEMPLATES ---
         const TEMPLATES = {
             land: {
                 cooking: [
-                    { cat: "المقاضي", items: ["لحم/دجاج (250ج للشخص)", "رز (نص كوب للشخص)", "بصل وطماطم", "بهارات وملح", "زيت", "ماء طبخ"] },
-                    { cat: "عدة الطبخ", items: ["قدر طبخ", "بادية (غسيل رز ونقع)", "ذراية (مصد هواء)", "بيز (مساكة)", "مغرفة وملاس", "سكين ولوح تقطيع", "صحون وملاعق", "سفرة طعام", "دافور كبير/غاز", "أكياس نفايات"] },
-                    { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر"] },
-                    { cat: "عزبة القهوة", items: ["لقمة (مفواح)", "دلة قهوة", "إبريق شاهي", "بيز", "زمزمية (ترمس)", "فناجيل وبيالات", "ماء صحة"] },
-                    { cat: "شبّة الضو", items: ["منقد", "حطب/فحم", "ملقاط", "ولاعة ومكعبات"] },
-                    { cat: "الجلسة", items: ["فرشة", "مساند/مراكى", "لمبة سنارة"] }
+                    { cat: "المقاضي", items: [
+                        {t: "لحم/دجاج (250ج للشخص)", i: "🍖"}, {t: "رز (نص كوب للشخص)", i: "🍚"}, {t: "بصل وطماطم", i: "🧅"}, {t: "بهارات وملح", i: "🧂"}, {t: "زيت", i: "🫗"}, {t: "ماء طبخ", i: "🚰"}
+                    ]},
+                    { cat: "عدة الطبخ", items: [
+                        {t: "قدر طبخ", i: "🍲"}, {t: "بادية (غسيل رز ونقع)", i: "🥣"}, {t: "ذراية (مصد هواء)", i: "🧱"}, {t: "بيز (مساكة)", i: "🧤"}, {t: "مغرفة وملاس", i: "🥢"}, {t: "سكين ولوح تقطيع", i: "🔪"}, {t: "صحون وملاعق", i: "🍽️"}, {t: "سفرة طعام", i: "📜"}, {t: "دافور كبير/غاز", i: "🔥"}, {t: "أكياس نفايات", i: "🗑️"}
+                    ]},
+                    { cat: "المعاميل", items: [
+                        {t: "قهوة مطحونة", i: "☕"}, {t: "هيل مطحون", i: "🌿"}, {t: "زعفران", i: "🌸"}, {t: "شاي", i: "🫖"}, {t: "سكر", i: "🍬"}
+                    ]},
+                    { cat: "عزبة القهوة", items: [
+                        {t: "لقمة (مفواح)", i: "🔥"}, {t: "دلة قهوة", i: "🏺"}, {t: "إبريق شاهي", i: "🫖"}, {t: "بيز", i: "🧤"}, {t: "زمزمية (ترمس)", i: "🧊"}, {t: "فناجيل وبيالات", i: "🥛"}, {t: "ماء صحة", i: "💧"}
+                    ]},
+                    { cat: "شبّة الضو", items: [
+                        {t: "منقد", i: "🔥"}, {t: "حطب/فحم", i: "🪵"}, {t: "ملقاط", i: "🥢"}, {t: "ولاعة ومكعبات", i: "🧨"}
+                    ]},
+                    { cat: "الجلسة", items: [
+                        {t: "فرشة", i: "🛋️"}, {t: "كراسي", i: "🪑"}, {t: "مساند/مراكى", i: "🛋️"}, {t: "لمبة سنارة", i: "💡"}
+                    ]}
                 ],
                 prep_drinks: [
-                    { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر", "ماء صحة", "تمر"] },
-                    { cat: "عدة التحضير", items: ["دافور صغير", "ذراية (مصد هواء)", "بيز", "لقمة (مفواح)", "إبريق شاهي", "أكياس نفايات"] },
-                    { cat: "التقديم", items: ["دلة قهوة", "زمزمية قهوة", "زمزمية شاهي", "فناجيل وبيالات"] },
-                    { cat: "الجلسة وشبّة الضو", items: ["منقد", "ملقاط", "فرشة", "مساند", "حطب (اذا فيه شبة)"] }
+                    { cat: "المعاميل", items: [
+                        {t: "قهوة مطحونة", i: "☕"}, {t: "هيل", i: "🌿"}, {t: "زعفران", i: "🌸"}, {t: "شاي", i: "🫖"}, {t: "سكر", i: "🍬"}, {t: "ماء صحة", i: "💧"}, {t: "تمر", i: "🌴"}
+                    ]},
+                    { cat: "عدة التحضير", items: [
+                        {t: "دافور صغير", i: "🔥"}, {t: "ذراية", i: "🧱"}, {t: "بيز", i: "🧤"}, {t: "لقمة", i: "🥣"}, {t: "إبريق شاهي", i: "🫖"}, {t: "أكياس نفايات", i: "🗑️"}
+                    ]},
+                    { cat: "التقديم", items: [
+                        {t: "دلة قهوة", i: "🏺"}, {t: "زمزمية قهوة", i: "🧊"}, {t: "زمزمية شاهي", i: "🧊"}, {t: "فناجيل وبيالات", i: "🥛"}
+                    ]},
+                    { cat: "الجلسة وشبّة الضو", items: [
+                        {t: "منقد", i: "🔥"}, {t: "ملقاط", i: "🥢"}, {t: "فرشة", i: "🛋️"}, {t: "كراسي", i: "🪑"}, {t: "مساند", i: "🛋️"}, {t: "حطب", i: "🪵"}
+                    ]}
                 ],
                 ready_drinks: [
-                    { cat: "المشروبات", items: ["زمزمية قهوة (مليانة)", "زمزمية شاي (مليانة)", "ماء بارد"] },
-                    { cat: "سناكس", items: ["تمر", "مكسرات", "فطائر", "شيبسات"] },
-                    { cat: "أغراض", items: ["فناجيل وكاسات", "مناديل", "أكياس نفايات"] },
-                    { cat: "الجلسة", items: ["فرشة خفيفة", "كراسي"] }
+                    { cat: "المشروبات", items: [
+                        {t: "زمزمية قهوة (مليانة)", i: "☕"}, {t: "زمزمية شاي (مليانة)", i: "🫖"}, {t: "ماء بارد", i: "💧"}
+                    ]},
+                    { cat: "سناكس", items: [
+                        {t: "تمر", i: "🌴"}, {t: "مكسرات", i: "🥜"}, {t: "فطائر", i: "🥐"}, {t: "شيبسات", i: "🥔"}
+                    ]},
+                    { cat: "أغراض", items: [
+                        {t: "فناجيل وكاسات", i: "🥛"}, {t: "مناديل", i: "🧻"}, {t: "أكياس نفايات", i: "🗑️"}
+                    ]},
+                    { cat: "الجلسة", items: [ {t: "فرشة خفيفة", i: "🛋️"}, {t: "كراسي", i: "🪑"} ]}
                 ]
             },
             sea: {
                 cooking: [
-                    { cat: "عشاء", items: ["سمك/مشاوي", "خبز", "بهارات", "سلطات"] },
-                    { cat: "شوي", items: ["منقل شوي", "فحم", "ملقاط", "أسياخ/شبك", "هواية", "أكياس نفايات"] },
-                    { cat: "القهوة", items: ["دلة", "لقمة", "بيز", "قهوة وهيل", "ترامس"] },
-                    { cat: "جلسة", items: ["كراسي (عدد الأشخاص)", "طاولة", "فرشة"] }
+                    { cat: "عشاء", items: [{t: "سمك/مشاوي", i: "🐟"}, {t: "خبز", i: "🥖"}, {t: "بهارات", i: "🧂"}, {t: "سلطات", i: "🥗"}] },
+                    { cat: "شوي", items: [{t: "منقل شوي", i: "🔥"}, {t: "فحم", i: "🌑"}, {t: "ملقاط", i: "🥢"}, {t: "أسياخ/شبك", i: "🍢"}, {t: "هواية", i: "🌬️"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "القهوة", items: [{t: "دلة", i: "🏺"}, {t: "لقمة", i: "🥣"}, {t: "بيز", i: "🧤"}, {t: "قهوة وهيل", i: "☕"}, {t: "ترامس", i: "🧊"}] },
+                    { cat: "جلسة", items: [{t: "كراسي", i: "🪑"}, {t: "طاولة", i: "🪵"}, {t: "فرشة", i: "🛋️"}] }
                 ],
                 prep_drinks: [
-                    { cat: "عزبة القهوة", items: ["دافور", "ذراية", "بيز", "لقمة", "دلة", "إبريق شاهي", "زمزمية", "أكياس نفايات"] },
-                    { cat: "المكونات", items: ["قهوة مطحونة", "هيل", "شاي وسكر", "ماء"] },
-                    { cat: "جلسة", items: ["كراسي", "طاولة صغيرة"] }
+                    { cat: "عزبة القهوة", items: [{t: "دافور", i: "🔥"}, {t: "ذراية", i: "🧱"}, {t: "بيز", i: "🧤"}, {t: "لقمة", i: "🥣"}, {t: "دلة", i: "🏺"}, {t: "إبريق شاهي", i: "🫖"}, {t: "زمزمية", i: "🧊"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "المكونات", items: [{t: "قهوة مطحونة", i: "☕"}, {t: "هيل", i: "🌿"}, {t: "شاي وسكر", i: "🍬"}, {t: "ماء", i: "💧"}] },
+                    { cat: "جلسة", items: [{t: "كراسي", i: "🪑"}, {t: "طاولة صغيرة", i: "🪵"}] }
                 ],
                 ready_drinks: [
-                     { cat: "مشروبات", items: ["ترامس جاهزة", "عصيرات باردة", "ثلج"] },
-                     { cat: "أغراض", items: ["أكياس نفايات", "مناديل"] },
-                     { cat: "جلسة", items: ["كراسي شاطئ", "مظلة"] }
+                    { cat: "مشروبات", items: [{t: "ترامس جاهزة", i: "🧊"}, {t: "عصيرات باردة", i: "🥤"}, {t: "ثلج", i: "🧊"}] },
+                    { cat: "أغراض", items: [{t: "أكياس نفايات", i: "🗑️"}, {t: "مناديل", i: "🧻"}] },
+                    { cat: "جلسة", items: [{t: "كراسي شاطئ", i: "🏖️"}, {t: "مظلة", i: "⛱️"}] }
                 ]
             }
         };
         TEMPLATES.chalet = TEMPLATES.land;
         if(!TEMPLATES.sea.ready_drinks) TEMPLATES.sea.ready_drinks = TEMPLATES.land.ready_drinks;
 
+        // --- NAVIGATION & INIT ---
+        window.onload = function() { renderSavedLists(); populateIconGrid(); };
 
-        // --- INIT ---
-        window.onload = function() {
-            renderSavedLists();
-        };
-
-        // --- NAVIGATION ---
         function nextScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
             historyStack.push(screenId);
             updateHeader();
         }
-
         function goBack() {
             if (historyStack.length > 1) {
                 historyStack.pop();
@@ -378,54 +326,41 @@
                 updateHeader();
             }
         }
-
         function goToHome() {
             historyStack = ['home-screen'];
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('home-screen').classList.add('active');
             updateHeader();
-            renderSavedLists(); 
+            renderSavedLists();
         }
-
-        function updateHeader() {
-            document.querySelector('.back-btn').classList.toggle('hidden', historyStack.length <= 1);
-        }
+        function updateHeader() { document.querySelector('.back-btn').classList.toggle('hidden', historyStack.length <= 1); }
 
         // --- WIZARD ACTIONS ---
-        function selectType(type) {
-            currentSettings.type = type;
-            nextScreen('style-screen');
-        }
-
-        function selectStyle(style) {
-            currentSettings.style = style;
-            nextScreen('count-screen');
-        }
+        function selectType(type) { currentSettings.type = type; nextScreen('style-screen'); }
+        function selectStyle(style) { currentSettings.style = style; nextScreen('count-screen'); }
 
         // --- LIST GENERATION ---
         function generateNewList() {
             currentSettings.count = document.getElementById('people-count').value;
             let template = TEMPLATES[currentSettings.type]?.[currentSettings.style] || TEMPLATES.land.cooking;
             
-            // Map items to Object Structure {text, assignee}
+            // Map items to Object Structure {text, icon, assignee}
             activeList = template.map(section => {
                 return {
                     cat: section.cat,
-                    items: section.items.map(itemStr => {
+                    items: section.items.map(itemObj => {
                         return {
-                            text: itemStr.replace("عدد الأشخاص", currentSettings.count),
-                            assignee: "" // Empty by default
+                            text: itemObj.t.replace("عدد الأشخاص", currentSettings.count),
+                            icon: itemObj.i,
+                            assignee: ""
                         };
                     })
                 };
             });
-
-            isEditing = false;
-            renderList();
-            nextScreen('list-screen');
+            isEditing = false; renderList(); nextScreen('list-screen');
         }
 
-        // --- LIST RENDERING & EDITING ---
+        // --- LIST RENDERING ---
         function renderList() {
             const container = document.getElementById('list-container');
             container.innerHTML = "";
@@ -440,18 +375,30 @@
             }
 
             activeList.forEach((section, secIdx) => {
-                let html = `<div class="list-section">
-                                <div class="section-title">${section.cat}</div>`;
+                let html = `<div class="list-section"><div class="section-title">${section.cat}</div>`;
                 section.items.forEach((item, itemIdx) => {
                     html += `<div class="list-item">
-                                <span class="item-text">${item.text}</span>
-                                
-                                <input type="text" class="assignee-input" placeholder="مين بيجيب؟" 
-                                    value="${item.assignee}" 
-                                    oninput="updateAssignee(${secIdx}, ${itemIdx}, this.value)">`;
-
+                                <div class="item-content">`;
+                    
                     if(isEditing) {
-                        html += `<span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">🗑️</span>`;
+                        // EDIT MODE: Icon Button + Text Input
+                        html += `<span class="item-icon editable" onclick="openIconModal(${secIdx}, ${itemIdx})">${item.icon}</span>
+                                 <input type="text" class="item-input-edit" value="${item.text}" oninput="updateItemText(${secIdx}, ${itemIdx}, this.value)">`;
+                    } else {
+                        // VIEW MODE: Icon + Text
+                        html += `<span class="item-icon">${item.icon}</span>
+                                 <span class="item-text">${item.text}</span>`;
+                    }
+                    
+                    html += `</div>`;
+
+                    // Assignee Field
+                    html += `<input type="text" class="assignee-input" placeholder="مين؟" 
+                             value="${item.assignee}" oninput="updateAssignee(${secIdx}, ${itemIdx}, this.value)">`;
+
+                    // Actions
+                    if(isEditing) {
+                        html += `<span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">✕</span>`;
                     } else {
                         html += `<input type="checkbox" style="width:20px; height:20px;">`;
                     }
@@ -469,111 +416,147 @@
             });
         }
 
-        // --- LOGIC FUNCTIONS ---
-        function updateAssignee(secIdx, itemIdx, value) {
-            activeList[secIdx].items[itemIdx].assignee = value;
-        }
-
-        function toggleEditMode() {
-            isEditing = !isEditing;
-            renderList();
-        }
-
-        function deleteItem(secIdx, itemIdx) {
-            activeList[secIdx].items.splice(itemIdx, 1);
-            renderList();
-        }
-
+        // --- DATA UPDATES ---
+        function updateAssignee(secIdx, itemIdx, value) { activeList[secIdx].items[itemIdx].assignee = value; }
+        function updateItemText(secIdx, itemIdx, value) { activeList[secIdx].items[itemIdx].text = value; }
+        function toggleEditMode() { isEditing = !isEditing; renderList(); }
+        function deleteItem(secIdx, itemIdx) { activeList[secIdx].items.splice(itemIdx, 1); renderList(); }
         function addItem(secIdx) {
             const input = document.getElementById(`new-item-${secIdx}`);
             const val = input.value.trim();
-            if(val) {
-                // Add new object
-                activeList[secIdx].items.push({ text: val, assignee: "" });
-                renderList(); 
-            }
+            if(val) { activeList[secIdx].items.push({ text: val, icon: "🔹", assignee: "" }); renderList(); }
         }
 
-        // --- SAVING & LOADING ---
+        // --- ICON MODAL LOGIC ---
+        function populateIconGrid() {
+            const grid = document.getElementById('icon-grid');
+            grid.innerHTML = "";
+            ICONS_LIST.forEach(icon => {
+                grid.innerHTML += `<div class="icon-option" onclick="selectIcon('${icon}')">${icon}</div>`;
+            });
+        }
+        function openIconModal(secIdx, itemIdx) {
+            editingItemIndices = { sec: secIdx, item: itemIdx };
+            document.getElementById('icon-modal').style.display = 'flex';
+        }
+        function closeIconModal(e) {
+            if(e.target.id === 'icon-modal') document.getElementById('icon-modal').style.display = 'none';
+        }
+        function selectIcon(icon) {
+            if (editingItemIndices.sec !== null) {
+                activeList[editingItemIndices.sec].items[editingItemIndices.item].icon = icon;
+                renderList();
+            }
+            document.getElementById('icon-modal').style.display = 'none';
+        }
+
+        // --- COPY LOGIC ---
+        function showCopyModal() { document.getElementById('copy-modal').style.display = 'flex'; }
+        function closeCopyModal(e) { if(e.target.id === 'copy-modal') document.getElementById('copy-modal').style.display = 'none'; }
+
+        function copyToClipboard(mode) {
+            let text = `🏕️ *قائمة كشتة: ${currentSettings.count} أشخاص*\n\n`;
+
+            if (mode === 'category') {
+                // COPY BY CATEGORY
+                activeList.forEach(section => {
+                    if(section.items.length > 0) {
+                        text += `*${section.cat}*\n`;
+                        section.items.forEach(item => {
+                            text += `- ${item.icon} ${item.text}`;
+                            if(item.assignee) text += ` (👤 ${item.assignee})`;
+                            text += `\n`;
+                        });
+                        text += `\n`;
+                    }
+                });
+            } else if (mode === 'person') {
+                // COPY BY PERSON
+                let peopleMap = {};
+                let unassigned = [];
+
+                activeList.forEach(section => {
+                    section.items.forEach(item => {
+                        let name = item.assignee.trim();
+                        if(name) {
+                            if(!peopleMap[name]) peopleMap[name] = [];
+                            peopleMap[name].push(`${item.icon} ${item.text}`);
+                        } else {
+                            unassigned.push(`${item.icon} ${item.text}`);
+                        }
+                    });
+                });
+
+                for (let person in peopleMap) {
+                    text += `👤 *${person}*\n`;
+                    peopleMap[person].forEach(i => text += `- ${i}\n`);
+                    text += `\n`;
+                }
+
+                if(unassigned.length > 0) {
+                    text += `❓ *غير محدد*\n`;
+                    unassigned.forEach(i => text += `- ${i}\n`);
+                }
+            }
+
+            text += `_تم التجهيز عبر تطبيق كشتة_`;
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('copy-modal').style.display = 'none';
+                alert("تم النسخ للواتس! ✅");
+            });
+        }
+
+        // --- SAVING LOGIC ---
         function saveCurrentList() {
             let name = prompt("وش حاب تسمي القائمة؟", "كشتة الجمعة");
             if(name) {
                 let saved = JSON.parse(localStorage.getItem('keshta_saved') || "[]");
                 saved.push({
-                    id: Date.now(),
-                    name: name,
-                    date: new Date().toLocaleDateString('ar-SA'),
-                    list: activeList,
-                    count: currentSettings.count
+                    id: Date.now(), name: name, date: new Date().toLocaleDateString('ar-SA'),
+                    list: activeList, count: currentSettings.count
                 });
                 localStorage.setItem('keshta_saved', JSON.stringify(saved));
                 alert("تم الحفظ بنجاح! ✅");
                 goToHome();
             }
         }
-
         function renderSavedLists() {
             const container = document.getElementById('saved-list-container');
             let saved = JSON.parse(localStorage.getItem('keshta_saved') || "[]");
-            
-            if(saved.length === 0) {
-                container.innerHTML = `<div class="empty-state">ما فيه كشات محفوظة</div>`;
-                return;
-            }
-
+            if(saved.length === 0) { container.innerHTML = `<div class="empty-state">ما فيه كشات محفوظة</div>`; return; }
             container.innerHTML = "";
             saved.reverse().forEach((list, index) => {
                 let realIndex = saved.length - 1 - index; 
                 let html = `<div class="saved-item">
                                 <div onclick="loadSavedList(${realIndex})" style="flex:1; cursor:pointer;">
-                                    <div class="saved-info">
-                                        <h4>${list.name}</h4>
-                                        <span>📅 ${list.date} • 👥 ${list.count} أشخاص</span>
-                                    </div>
+                                    <div class="saved-info"><h4>${list.name}</h4><span>📅 ${list.date} • 👥 ${list.count}</span></div>
                                 </div>
                                 <button class="delete-saved-btn" onclick="deleteSavedList(${realIndex})">🗑️</button>
                             </div>`;
                 container.innerHTML += html;
             });
         }
-
         function loadSavedList(index) {
             let saved = JSON.parse(localStorage.getItem('keshta_saved'));
-            activeList = saved[index].list;
+            // Backwards compatibility fix
+            activeList = saved[index].list.map(section => ({
+                cat: section.cat,
+                items: section.items.map(i => ({
+                    text: i.text || i,
+                    icon: i.icon || "🔹", 
+                    assignee: i.assignee || ""
+                }))
+            }));
             currentSettings.count = saved[index].count;
-            isEditing = false;
-            renderList();
-            nextScreen('list-screen');
+            isEditing = false; renderList(); nextScreen('list-screen');
         }
-
         function deleteSavedList(index) {
-            if(confirm("متأكد تبي تحذف هالقائمة؟")) {
+            if(confirm("تحذف القائمة؟")) {
                 let saved = JSON.parse(localStorage.getItem('keshta_saved'));
                 saved.splice(index, 1);
                 localStorage.setItem('keshta_saved', JSON.stringify(saved));
                 renderSavedLists();
             }
-        }
-
-        // --- COPY ---
-        function copyToClipboard() {
-            let text = `🏕️ *قائمة كشتة: ${currentSettings.count} أشخاص*\n\n`;
-            activeList.forEach(section => {
-                if(section.items.length > 0) {
-                    text += `*${section.cat}*\n`;
-                    section.items.forEach(item => {
-                        text += `- ${item.text}`;
-                        // If assignee exists, add it
-                        if(item.assignee && item.assignee.trim() !== "") {
-                            text += ` (👤 ${item.assignee})`;
-                        }
-                        text += `\n`;
-                    });
-                    text += `\n`;
-                }
-            });
-            text += `_تم التجهيز عبر تطبيق كشتة_`;
-            navigator.clipboard.writeText(text).then(() => alert("تم النسخ للواتس! ✅"));
         }
     </script>
 </body>
