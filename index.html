@@ -38,7 +38,7 @@
         }
 
         .logo { 
-            font-size: 1.4rem; /* Increased slightly for Arabic */
+            font-size: 1.4rem;
             font-weight: 800; 
             color: var(--primary); 
             cursor: pointer;
@@ -219,8 +219,7 @@
         <button class="btn-main" onclick="nextScreen('type-screen')" style="margin-top:0; margin-bottom: 30px;">➕ جهّز كشتة جديدة</button>
 
         <h3 style="margin-bottom: 10px;">كشاتك المحفوظة 📂</h3>
-        <div id="saved-list-container">
-            </div>
+        <div id="saved-list-container"></div>
     </div>
 
     <div id="type-screen" class="screen">
@@ -272,58 +271,68 @@
             <button class="btn-secondary" onclick="saveCurrentList()">💾 حفظ</button>
             <button class="btn-secondary" onclick="copyToClipboard()">📤 نسخ</button>
         </div>
-        
         <div id="list-container" style="padding-bottom: 80px;"></div>
     </div>
 
     <script>
         // --- DATA STATE ---
         let currentSettings = { type: '', style: '', count: 4 };
-        let activeList = []; // Array of sections [{cat: '...', items: ['...']}]
+        let activeList = []; 
         let isEditing = false;
         let historyStack = ['home-screen'];
 
-        // --- TEMPLATES DATABASE ---
+        // --- TEMPLATES DATABASE (UPDATED) ---
         const TEMPLATES = {
             land: {
                 cooking: [
                     { cat: "المقاضي", items: ["لحم/دجاج (250ج للشخص)", "رز (نص كوب للشخص)", "بصل وطماطم", "بهارات وملح", "زيت", "ماء طبخ"] },
-                    { cat: "عدة الطبخ", items: ["قدر طبخ", "مغرفة وملاس", "سكين ولوح تقطيع", "صحون وملاعق", "سفرة طعام", "دافور كبير/غاز"] },
-                    { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي (تلقيمة/أكياس)", "سكر"] },
-                    { cat: "عزبة القهوة", items: ["لقمة (مفواح)", "دلة قهوة", "إبريق شاهي", "زمزمية (ترمس)", "فناجيل وبيالات", "ماء صحة"] },
-                    { cat: "شبّة الضو", items: ["حطب/فحم", "ولاعة ومكعبات", "منقاش"] },
+                    // Added: Badya, Dharaya, Bayz, Trash bags
+                    { cat: "عدة الطبخ", items: ["قدر طبخ", "بادية (غسيل رز ونقع)", "ذراية (مصد هواء)", "بيز (مساكة)", "مغرفة وملاس", "سكين ولوح تقطيع", "صحون وملاعق", "سفرة طعام", "دافور كبير/غاز", "أكياس نفايات"] },
+                    { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر"] },
+                    // Added: Bayz, Dharaya (common needs)
+                    { cat: "عزبة القهوة", items: ["لقمة (مفواح)", "دلة قهوة", "إبريق شاهي", "بيز", "زمزمية (ترمس)", "فناجيل وبيالات", "ماء صحة"] },
+                    // Added: Manqad, Milqat
+                    { cat: "شبّة الضو", items: ["منقد", "حطب/فحم", "ملقاط", "ولاعة ومكعبات"] },
                     { cat: "الجلسة", items: ["فرشة", "مساند/مراكى", "لمبة سنارة"] }
                 ],
                 prep_drinks: [
                     { cat: "المعاميل", items: ["قهوة مطحونة", "هيل مطحون", "زعفران", "شاي", "سكر", "ماء صحة", "تمر"] },
-                    { cat: "عدة التحضير", items: ["دافور صغير", "لقمة (مفواح)", "إبريق شاهي", "بيز", "ذراية"] },
-                    { cat: "التقديم", items: ["دلة قهوة", "زمزمية قهوة", "زمزمية شاهي", "فناجيل وبيالات", "كيس نفايات"] },
-                    { cat: "الجلسة", items: ["فرشة", "مساند", "حطب (اذا فيه شبة)"] }
+                    // Added: Dharaya, Bayz, Trash bags
+                    { cat: "عدة التحضير", items: ["دافور صغير", "ذراية (مصد هواء)", "بيز", "لقمة (مفواح)", "إبريق شاهي", "أكياس نفايات"] },
+                    { cat: "التقديم", items: ["دلة قهوة", "زمزمية قهوة", "زمزمية شاهي", "فناجيل وبيالات"] },
+                    // Added: Manqad, Milqat
+                    { cat: "الجلسة وشبّة الضو", items: ["منقد", "ملقاط", "فرشة", "مساند", "حطب (اذا فيه شبة)"] }
                 ],
                 ready_drinks: [
                     { cat: "المشروبات", items: ["زمزمية قهوة (مليانة)", "زمزمية شاي (مليانة)", "ماء بارد"] },
                     { cat: "سناكس", items: ["تمر", "مكسرات", "فطائر", "شيبسات"] },
-                    { cat: "أغراض", items: ["فناجيل وكاسات", "مناديل", "كيس نفايات"] },
+                    // Added: Trash bags
+                    { cat: "أغراض", items: ["فناجيل وكاسات", "مناديل", "أكياس نفايات"] },
                     { cat: "الجلسة", items: ["فرشة خفيفة", "كراسي"] }
                 ]
             },
             sea: {
                 cooking: [
                     { cat: "عشاء", items: ["سمك/مشاوي", "خبز", "بهارات", "سلطات"] },
-                    { cat: "شوي", items: ["منقل شوي", "فحم", "أسياخ/شبك", "هواية"] },
-                    { cat: "القهوة", items: ["دلة", "لقمة", "قهوة وهيل", "ترامس"] },
+                    // Added: Trash bags, Milqat for BBQ
+                    { cat: "شوي", items: ["منقل شوي", "فحم", "ملقاط", "أسياخ/شبك", "هواية", "أكياس نفايات"] },
+                    { cat: "القهوة", items: ["دلة", "لقمة", "بيز", "قهوة وهيل", "ترامس"] },
                     { cat: "جلسة", items: ["كراسي (عدد الأشخاص)", "طاولة", "فرشة"] }
                 ],
                 prep_drinks: [
-                    { cat: "عزبة القهوة", items: ["دافور", "لقمة", "دلة", "إبريق شاهي", "زمزمية"] },
+                    // Added: Trash bags, Bayz, Dharaya
+                    { cat: "عزبة القهوة", items: ["دافور", "ذراية", "بيز", "لقمة", "دلة", "إبريق شاهي", "زمزمية", "أكياس نفايات"] },
                     { cat: "المكونات", items: ["قهوة مطحونة", "هيل", "شاي وسكر", "ماء"] },
                     { cat: "جلسة", items: ["كراسي", "طاولة صغيرة"] }
                 ],
-                ready_drinks: [ /* Simplified for demo */ ]
+                ready_drinks: [
+                     { cat: "مشروبات", items: ["ترامس جاهزة", "عصيرات باردة", "ثلج"] },
+                     { cat: "أغراض", items: ["أكياس نفايات", "مناديل"] },
+                     { cat: "جلسة", items: ["كراسي شاطئ", "مظلة"] }
+                ]
             }
         };
         TEMPLATES.chalet = TEMPLATES.land;
-        // Fix empty Sea/Ready for demo safety
         if(!TEMPLATES.sea.ready_drinks) TEMPLATES.sea.ready_drinks = TEMPLATES.land.ready_drinks;
 
 
@@ -355,7 +364,7 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('home-screen').classList.add('active');
             updateHeader();
-            renderSavedLists(); // Refresh saved lists
+            renderSavedLists(); 
         }
 
         function updateHeader() {
@@ -376,11 +385,8 @@
         // --- LIST GENERATION ---
         function generateNewList() {
             currentSettings.count = document.getElementById('people-count').value;
-            
-            // Deep copy the template to activeList
             let template = TEMPLATES[currentSettings.type]?.[currentSettings.style] || TEMPLATES.land.cooking;
             
-            // Process the strings (replace count) and create a clean object
             activeList = template.map(section => {
                 return {
                     cat: section.cat,
@@ -410,31 +416,24 @@
             activeList.forEach((section, secIdx) => {
                 let html = `<div class="list-section">
                                 <div class="section-title">${section.cat}</div>`;
-                
-                // Render Items
                 section.items.forEach((item, itemIdx) => {
                     html += `<div class="list-item">`;
-                    
                     if(isEditing) {
-                        // Edit Mode: Delete Icon + Text
                         html += `<span>${item}</span>
                                  <span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">🗑️</span>`;
                     } else {
-                        // View Mode: Text + Checkbox
                         html += `<span>${item}</span>
                                  <input type="checkbox" style="width:20px; height:20px;">`;
                     }
                     html += `</div>`;
                 });
 
-                // Edit Mode: Add new item input
                 if(isEditing) {
                     html += `<div class="add-row">
                                 <input type="text" placeholder="غرض جديد..." class="add-input" id="new-item-${secIdx}">
                                 <button class="add-btn-small" onclick="addItem(${secIdx})">＋</button>
                              </div>`;
                 }
-
                 html += `</div>`;
                 container.innerHTML += html;
             });
@@ -487,11 +486,8 @@
             }
 
             container.innerHTML = "";
-            // Show newest first
             saved.reverse().forEach((list, index) => {
-                // Adjust index for original array
                 let realIndex = saved.length - 1 - index; 
-                
                 let html = `<div class="saved-item">
                                 <div onclick="loadSavedList(${realIndex})" style="flex:1; cursor:pointer;">
                                     <div class="saved-info">
@@ -509,7 +505,6 @@
             let saved = JSON.parse(localStorage.getItem('keshta_saved'));
             activeList = saved[index].list;
             currentSettings.count = saved[index].count;
-            
             isEditing = false;
             renderList();
             nextScreen('list-screen');
