@@ -6,54 +6,34 @@
     <title>كشتة | جهّز كشتتك</title>
     <style>
         :root {
-            --primary: #2D6A4F;
-            --accent: #D8F3DC;
-            --text: #1B4332;
-            --bg: #F8F9FA;
-            --white: #FFFFFF;
-            --danger: #e63946;
-            --gray: #ced4da;
+            --primary: #2D6A4F; --accent: #D8F3DC; --text: #1B4332;
+            --bg: #F8F9FA; --white: #FFFFFF; --danger: #e63946; --gray: #ced4da;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--bg); color: var(--text); margin: 0; padding: 0;
+            height: 100vh; display: flex; flex-direction: column;
         }
 
-        /* --- UI COMPONENTS --- */
+        /* HEADER */
         header {
-            background-color: var(--white);
-            padding: 15px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background-color: var(--white); padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex;
+            align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100;
         }
         .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); cursor: pointer; }
         .back-btn { font-size: 1.5rem; cursor: pointer; border: none; background: none; padding: 0;}
 
-        .screen {
-            display: none; flex: 1; padding: 20px; flex-direction: column;
-            animation: fadeIn 0.3s ease; overflow-y: auto;
-        }
+        .screen { display: none; flex: 1; padding: 20px; flex-direction: column; animation: fadeIn 0.3s ease; overflow-y: auto; }
         .screen.active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* BUTTONS */
         .btn-main {
             background-color: var(--primary); color: white; border: none; padding: 16px;
             border-radius: 12px; font-size: 1.1rem; font-weight: bold; width: 100%;
             cursor: pointer; margin-top: 20px; box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
         }
-
         .action-bar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .btn-secondary {
             background-color: white; color: var(--primary); border: 1px solid var(--primary);
@@ -62,6 +42,7 @@
         }
         .btn-secondary.active-edit { background-color: var(--primary); color: white; }
 
+        /* CARDS */
         .card {
             background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #eee; cursor: pointer;
@@ -81,13 +62,12 @@
         .saved-info span { font-size: 0.8rem; color: #888; }
         .delete-saved-btn { color: var(--danger); background: none; border: none; font-size: 1.2rem; padding: 10px; cursor: pointer;}
 
-        /* LIST STYLES */
+        /* LIST ITEMS */
         .list-section { margin-bottom: 25px; }
         .section-title { 
             font-size: 0.95rem; color: var(--primary); margin-bottom: 10px; font-weight: bold;
             background: #eef5f2; padding: 5px 10px; border-radius: 8px; display: inline-block;
         }
-        
         .list-item {
             background: white; padding: 10px 15px; border-bottom: 1px solid #f0f0f0;
             display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
@@ -96,19 +76,22 @@
         .list-item:last-child { border-bottom: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
 
         .item-content { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 150px; }
-        .item-icon { font-size: 1.4rem; cursor: default; }
-        .item-icon.editable { cursor: pointer; background: #eee; border-radius: 50%; width: 35px; height: 35px; text-align: center; line-height: 35px; }
+        
+        .item-icon { 
+            font-size: 1.4rem; cursor: default; display: flex; align-items: center; justify-content: center; 
+            width: 35px; height: 35px;
+        }
+        .item-icon.editable { cursor: pointer; background: #eee; border-radius: 8px; }
+        .custom-img-icon { width: 35px; height: 35px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        
+        /* SVG Styling */
+        .svg-icon { width: 28px; height: 28px; fill: none; stroke: var(--primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+        .svg-icon-fill { fill: var(--primary); stroke: none; }
+
         .item-text { font-size: 0.95rem; }
-        .item-input-edit {
-            border: 1px solid var(--primary); padding: 5px; border-radius: 5px; font-size: 0.9rem; width: 100%;
-        }
-
-        .assignee-input {
-            border: 1px solid var(--gray); background: #fdfdfd; border-radius: 6px;
-            padding: 6px 10px; font-size: 0.8rem; width: 90px; color: #555; transition: 0.2s;
-        }
+        .item-input-edit { border: 1px solid var(--primary); padding: 5px; border-radius: 5px; font-size: 0.9rem; width: 100%; }
+        .assignee-input { border: 1px solid var(--gray); background: #fdfdfd; border-radius: 6px; padding: 6px 10px; font-size: 0.8rem; width: 90px; color: #555; transition: 0.2s; }
         .assignee-input:focus { border-color: var(--primary); outline: none; background: white; width: 110px; }
-
         .delete-btn { color: var(--danger); cursor: pointer; font-weight: bold; padding: 5px; font-size: 1.1rem; }
         
         .add-row { display: flex; padding: 10px; background: #f9f9f9; border-top: 1px solid #eee; gap: 10px; }
@@ -116,23 +99,17 @@
         .add-btn-small { background: var(--primary); color: white; border: none; border-radius: 6px; width: 35px; cursor: pointer; }
 
         /* MODALS */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000;
-        }
-        .modal-box {
-            background: white; padding: 20px; border-radius: 16px; width: 90%; max-width: 350px;
-            text-align: center; max-height: 80vh; overflow-y: auto;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-box { background: white; padding: 20px; border-radius: 16px; width: 90%; max-width: 350px; text-align: center; max-height: 80vh; overflow-y: auto; }
         .modal-title { font-weight: bold; margin-bottom: 15px; display: block; }
-        .icon-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        .icon-option { font-size: 1.5rem; cursor: pointer; padding: 5px; border-radius: 8px; }
+        
+        .icon-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 15px; }
+        .icon-option { font-size: 1.5rem; cursor: pointer; padding: 5px; border-radius: 8px; display: flex; justify-content: center; align-items: center;}
         .icon-option:hover { background: #eee; }
         
-        .copy-option-btn {
-            display: block; width: 100%; padding: 15px; margin-bottom: 10px;
-            border: 1px solid #ddd; border-radius: 12px; background: #fff; font-size: 1rem; cursor: pointer;
-        }
+        .upload-btn { background: #f0f0f0; border: 2px dashed #ccc; color: #555; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
+
+        .copy-option-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 12px; background: #fff; font-size: 1rem; cursor: pointer; }
         .copy-option-btn:hover { background: #f9f9f9; border-color: var(--primary); }
 
         input[type="number"] { width: 100%; padding: 15px; font-size: 1.5rem; text-align: center; border: 2px solid #ddd; border-radius: 12px; margin: 20px 0; box-sizing: border-box; }
@@ -208,8 +185,9 @@
     <div id="icon-modal" class="modal-overlay" onclick="closeIconModal(event)">
         <div class="modal-box">
             <span class="modal-title">اختر أيقونة</span>
-            <div class="icon-grid" id="icon-grid">
-                </div>
+            <button class="upload-btn" onclick="document.getElementById('img-upload').click()">📸 صورة من عندك</button>
+            <input type="file" id="img-upload" hidden accept="image/*" onchange="processImage(this)">
+            <div class="icon-grid" id="icon-grid"></div>
         </div>
     </div>
 
@@ -222,79 +200,64 @@
     </div>
 
     <script>
-        // --- DATA & CONFIG ---
         let currentSettings = { type: '', style: '', count: 4 };
-        let activeList = []; 
+        let activeList = [];
         let isEditing = false;
         let historyStack = ['home-screen'];
-        
         let editingItemIndices = { sec: null, item: null };
 
-        const ICONS_LIST = [
-            "🍖", "🍗", "🍚", "🧅", "🧂", "🫗", "🍲", "🪵", "🔪", "🥣", "🥢", "🧊", "🗑️",
-            "☕", "🫖", "🥛", "🌿", "🍬", "🧂", "🔥", "🧱", "🏮", "🛋️", "🧴", "🩹", "🔦",
-            "🧴", "🕶️", "⛱️", "🏖️", "🎣", "🦐", "🌭", "🍔", "🥪", "🥤", "⛺", "🚙", "🪑"
+        // --- CUSTOM SVG ICONS (Based on your images) ---
+        const CUSTOM_ICONS = {
+            // أيقونة اللقمة (المفواح) بناءً على الصورة الأولى
+            "lugma": `<svg viewBox="0 0 24 24" class="svg-icon"><path d="M6 9 L7 20 H17 L18 9 H6 Z M6 9 L2 8 L6 11 M18 10 C21 10 22 14 18 17 M6 9 Q12 4 18 9 M10.5 5.5 H13.5 L13 3 H11 Z"/></svg>`,
+            
+            // أيقونة الدلة بناءً على الصورة الثانية
+            "dallah": `<svg viewBox="0 0 24 24" class="svg-icon"><path d="M7 11 Q6 10 2 10 Q2 7 9 7 M9 7 V17 C9 20 15 20 15 17 V7 M15 7 Q12 5 9 7 M12 5 V2 M15 9 C19 9 19 14 15 16"/></svg>`,
+            
+            "dharaya": `<svg viewBox="0 0 24 24" class="svg-icon"><path d="M2,22h20v-2H2V22z M4,18h16V6H4V18z M6,8h3v8H6V8z M11,8h3v8h-3V8z M16,8h3v8h-3V8z"/></svg>`,
+            "mangad": `<svg viewBox="0 0 24 24" class="svg-icon"><path d="M21,6H3v8h2v6h3v-6h8v6h3v-6h2V6z M5,12V8h14v4H5z"/></svg>`,
+            "gas": `<svg viewBox="0 0 24 24" class="svg-icon"><path d="M12,2c-4.4,0-8,3.6-8,8c0,3.9,2.8,7.1,6.5,7.8V22h3v-4.2c3.7-0.7,6.5-3.9,6.5-7.8C20,5.6,16.4,2,12,2z M12,16 c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,16,12,16z"/></svg>`
+        };
+
+        const EMOJI_LIST = [
+            "🍖", "🍗", "🍚", "🧅", "🧂", "🫗", "🍲", "🪵", "🔪", 
+            "🥣", "🧊", "☕", "🫖", "🥛", "🌿", "🔥", "🏮", "🛋️", 
+            "🧴", "🩹", "🔦", "🕶️", "⛺", "🚙"
         ];
 
         // --- TEMPLATES ---
         const TEMPLATES = {
             land: {
                 cooking: [
-                    { cat: "المقاضي", items: [
-                        {t: "لحم/دجاج (250ج للشخص)", i: "🍖"}, {t: "رز (نص كوب للشخص)", i: "🍚"}, {t: "بصل وطماطم", i: "🧅"}, {t: "بهارات وملح", i: "🧂"}, {t: "زيت", i: "🫗"}, {t: "ماء طبخ", i: "🚰"}
-                    ]},
-                    { cat: "عدة الطبخ", items: [
-                        {t: "قدر طبخ", i: "🍲"}, {t: "بادية (غسيل رز ونقع)", i: "🥣"}, {t: "ذراية (مصد هواء)", i: "🧱"}, {t: "بيز (مساكة)", i: "🧤"}, {t: "مغرفة وملاس", i: "🥢"}, {t: "سكين ولوح تقطيع", i: "🔪"}, {t: "صحون وملاعق", i: "🍽️"}, {t: "سفرة طعام", i: "📜"}, {t: "دافور كبير/غاز", i: "🔥"}, {t: "أكياس نفايات", i: "🗑️"}
-                    ]},
-                    { cat: "المعاميل", items: [
-                        {t: "قهوة مطحونة", i: "☕"}, {t: "هيل مطحون", i: "🌿"}, {t: "زعفران", i: "🌸"}, {t: "شاي", i: "🫖"}, {t: "سكر", i: "🍬"}
-                    ]},
-                    { cat: "عزبة القهوة", items: [
-                        {t: "لقمة (مفواح)", i: "🔥"}, {t: "دلة قهوة", i: "🏺"}, {t: "إبريق شاهي", i: "🫖"}, {t: "بيز", i: "🧤"}, {t: "زمزمية (ترمس)", i: "🧊"}, {t: "فناجيل وبيالات", i: "🥛"}, {t: "ماء صحة", i: "💧"}
-                    ]},
-                    { cat: "شبّة الضو", items: [
-                        {t: "منقد", i: "🔥"}, {t: "حطب/فحم", i: "🪵"}, {t: "ملقاط", i: "🥢"}, {t: "ولاعة ومكعبات", i: "🧨"}
-                    ]},
-                    { cat: "الجلسة", items: [
-                        {t: "فرشة", i: "🛋️"}, {t: "كراسي", i: "🪑"}, {t: "مساند/مراكى", i: "🛋️"}, {t: "لمبة سنارة", i: "💡"}
-                    ]}
+                    { cat: "المقاضي", items: [{t: "لحم/دجاج (250ج للشخص)", i: "🍖"}, {t: "رز (نص كوب للشخص)", i: "🍚"}, {t: "بصل وطماطم", i: "🧅"}, {t: "بهارات وملح", i: "🧂"}, {t: "زيت", i: "🫗"}, {t: "ماء طبخ", i: "🚰"}] },
+                    { cat: "عدة الطبخ", items: [{t: "قدر طبخ", i: "🍲"}, {t: "بادية (غسيل رز ونقع)", i: "🥣"}, {t: "ذراية (مصد هواء)", i: "dharaya"}, {t: "بيز (مساكة)", i: "🧤"}, {t: "مغرفة وملاس", i: "🥄"}, {t: "سكين ولوح تقطيع", i: "🔪"}, {t: "صحون وملاعق", i: "🍽️"}, {t: "سفرة طعام", i: "📜"}, {t: "دافور كبير/غاز", i: "gas"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "المعاميل", items: [{t: "قهوة مطحونة", i: "☕"}, {t: "هيل مطحون", i: "🌿"}, {t: "زعفران", i: "🌸"}, {t: "شاي", i: "🫖"}, {t: "سكر", i: "🍬"}] },
+                    { cat: "عزبة القهوة", items: [{t: "لقمة (مفواح)", i: "lugma"}, {t: "دلة قهوة", i: "dallah"}, {t: "إبريق شاهي", i: "🫖"}, {t: "بيز", i: "🧤"}, {t: "زمزمية (ترمس)", i: "🧊"}, {t: "فناجيل وبيالات", i: "🥛"}, {t: "ماء صحة", i: "💧"}] },
+                    { cat: "شبّة الضو", items: [{t: "منقد", i: "mangad"}, {t: "حطب/فحم", i: "🪵"}, {t: "ملقاط", i: "🥢"}, {t: "ولاعة ومكعبات", i: "🧨"}] },
+                    { cat: "الجلسة", items: [{t: "فرشة", i: "🛋️"}, {t: "مساند/مراكى", i: "🛋️"}, {t: "لمبة سنارة", i: "🏮"}] }
                 ],
                 prep_drinks: [
-                    { cat: "المعاميل", items: [
-                        {t: "قهوة مطحونة", i: "☕"}, {t: "هيل", i: "🌿"}, {t: "زعفران", i: "🌸"}, {t: "شاي", i: "🫖"}, {t: "سكر", i: "🍬"}, {t: "ماء صحة", i: "💧"}, {t: "تمر", i: "🌴"}
-                    ]},
-                    { cat: "عدة التحضير", items: [
-                        {t: "دافور صغير", i: "🔥"}, {t: "ذراية", i: "🧱"}, {t: "بيز", i: "🧤"}, {t: "لقمة", i: "🥣"}, {t: "إبريق شاهي", i: "🫖"}, {t: "أكياس نفايات", i: "🗑️"}
-                    ]},
-                    { cat: "التقديم", items: [
-                        {t: "دلة قهوة", i: "🏺"}, {t: "زمزمية قهوة", i: "🧊"}, {t: "زمزمية شاهي", i: "🧊"}, {t: "فناجيل وبيالات", i: "🥛"}
-                    ]},
-                    { cat: "الجلسة وشبّة الضو", items: [
-                        {t: "منقد", i: "🔥"}, {t: "ملقاط", i: "🥢"}, {t: "فرشة", i: "🛋️"}, {t: "كراسي", i: "🪑"}, {t: "مساند", i: "🛋️"}, {t: "حطب", i: "🪵"}
-                    ]}
+                    { cat: "المعاميل", items: [{t: "قهوة مطحونة", i: "☕"}, {t: "هيل", i: "🌿"}, {t: "زعفران", i: "🌸"}, {t: "شاي", i: "🫖"}, {t: "سكر", i: "🍬"}, {t: "ماء صحة", i: "💧"}, {t: "تمر", i: "🌴"}] },
+                    { cat: "عدة التحضير", items: [{t: "دافور صغير", i: "gas"}, {t: "ذراية", i: "dharaya"}, {t: "بيز", i: "🧤"}, {t: "لقمة", i: "lugma"}, {t: "إبريق شاهي", i: "🫖"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "التقديم", items: [{t: "دلة قهوة", i: "dallah"}, {t: "زمزمية قهوة", i: "🧊"}, {t: "زمزمية شاهي", i: "🧊"}, {t: "فناجيل وبيالات", i: "🥛"}] },
+                    { cat: "الجلسة", items: [{t: "منقد", i: "mangad"}, {t: "ملقاط", i: "🥢"}, {t: "فرشة", i: "🛋️"}, {t: "مساند", i: "🛋️"}, {t: "حطب", i: "🪵"}] }
                 ],
                 ready_drinks: [
-                    { cat: "المشروبات", items: [
-                        {t: "زمزمية قهوة (مليانة)", i: "☕"}, {t: "زمزمية شاي (مليانة)", i: "🫖"}, {t: "ماء بارد", i: "💧"}
-                    ]},
-                    { cat: "سناكس", items: [
-                        {t: "تمر", i: "🌴"}, {t: "مكسرات", i: "🥜"}, {t: "فطائر", i: "🥐"}, {t: "شيبسات", i: "🥔"}
-                    ]},
-                    { cat: "أغراض", items: [
-                        {t: "فناجيل وكاسات", i: "🥛"}, {t: "مناديل", i: "🧻"}, {t: "أكياس نفايات", i: "🗑️"}
-                    ]},
-                    { cat: "الجلسة", items: [ {t: "فرشة خفيفة", i: "🛋️"}, {t: "كراسي", i: "🪑"} ]}
+                    { cat: "المشروبات", items: [{t: "زمزمية قهوة (مليانة)", i: "☕"}, {t: "زمزمية شاي (مليانة)", i: "🫖"}, {t: "ماء بارد", i: "💧"}] },
+                    { cat: "سناكس", items: [{t: "تمر", i: "🌴"}, {t: "مكسرات", i: "🥜"}, {t: "فطائر", i: "🥐"}, {t: "شيبسات", i: "🥔"}] },
+                    { cat: "أغراض", items: [{t: "فناجيل وكاسات", i: "🥛"}, {t: "مناديل", i: "🧻"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "الجلسة", items: [{t: "فرشة خفيفة", i: "🛋️"}, {t: "كراسي", i: "🪑"}] }
                 ]
             },
             sea: {
                 cooking: [
                     { cat: "عشاء", items: [{t: "سمك/مشاوي", i: "🐟"}, {t: "خبز", i: "🥖"}, {t: "بهارات", i: "🧂"}, {t: "سلطات", i: "🥗"}] },
-                    { cat: "شوي", items: [{t: "منقل شوي", i: "🔥"}, {t: "فحم", i: "🌑"}, {t: "ملقاط", i: "🥢"}, {t: "أسياخ/شبك", i: "🍢"}, {t: "هواية", i: "🌬️"}, {t: "أكياس نفايات", i: "🗑️"}] },
-                    { cat: "القهوة", items: [{t: "دلة", i: "🏺"}, {t: "لقمة", i: "🥣"}, {t: "بيز", i: "🧤"}, {t: "قهوة وهيل", i: "☕"}, {t: "ترامس", i: "🧊"}] },
+                    { cat: "شوي", items: [{t: "منقل شوي", i: "mangad"}, {t: "فحم", i: "🌑"}, {t: "ملقاط", i: "🥢"}, {t: "أسياخ/شبك", i: "🍢"}, {t: "هواية", i: "🌬️"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "القهوة", items: [{t: "دلة", i: "dallah"}, {t: "لقمة", i: "lugma"}, {t: "بيز", i: "🧤"}, {t: "قهوة وهيل", i: "☕"}, {t: "ترامس", i: "🧊"}] },
                     { cat: "جلسة", items: [{t: "كراسي", i: "🪑"}, {t: "طاولة", i: "🪵"}, {t: "فرشة", i: "🛋️"}] }
                 ],
                 prep_drinks: [
-                    { cat: "عزبة القهوة", items: [{t: "دافور", i: "🔥"}, {t: "ذراية", i: "🧱"}, {t: "بيز", i: "🧤"}, {t: "لقمة", i: "🥣"}, {t: "دلة", i: "🏺"}, {t: "إبريق شاهي", i: "🫖"}, {t: "زمزمية", i: "🧊"}, {t: "أكياس نفايات", i: "🗑️"}] },
+                    { cat: "عزبة القهوة", items: [{t: "دافور", i: "gas"}, {t: "ذراية", i: "dharaya"}, {t: "بيز", i: "🧤"}, {t: "لقمة", i: "lugma"}, {t: "دلة", i: "dallah"}, {t: "إبريق شاهي", i: "🫖"}, {t: "زمزمية", i: "🧊"}, {t: "أكياس نفايات", i: "🗑️"}] },
                     { cat: "المكونات", items: [{t: "قهوة مطحونة", i: "☕"}, {t: "هيل", i: "🌿"}, {t: "شاي وسكر", i: "🍬"}, {t: "ماء", i: "💧"}] },
                     { cat: "جلسة", items: [{t: "كراسي", i: "🪑"}, {t: "طاولة صغيرة", i: "🪵"}] }
                 ],
@@ -308,7 +271,7 @@
         TEMPLATES.chalet = TEMPLATES.land;
         if(!TEMPLATES.sea.ready_drinks) TEMPLATES.sea.ready_drinks = TEMPLATES.land.ready_drinks;
 
-        // --- NAVIGATION & INIT ---
+        // --- INIT ---
         window.onload = function() { renderSavedLists(); populateIconGrid(); };
 
         function nextScreen(screenId) {
@@ -335,76 +298,64 @@
         }
         function updateHeader() { document.querySelector('.back-btn').classList.toggle('hidden', historyStack.length <= 1); }
 
-        // --- WIZARD ACTIONS ---
         function selectType(type) { currentSettings.type = type; nextScreen('style-screen'); }
         function selectStyle(style) { currentSettings.style = style; nextScreen('count-screen'); }
 
-        // --- LIST GENERATION ---
         function generateNewList() {
             currentSettings.count = document.getElementById('people-count').value;
             let template = TEMPLATES[currentSettings.type]?.[currentSettings.style] || TEMPLATES.land.cooking;
-            
-            // Map items to Object Structure {text, icon, assignee}
-            activeList = template.map(section => {
-                return {
-                    cat: section.cat,
-                    items: section.items.map(itemObj => {
-                        return {
-                            text: itemObj.t.replace("عدد الأشخاص", currentSettings.count),
-                            icon: itemObj.i,
-                            assignee: ""
-                        };
-                    })
-                };
-            });
+            activeList = template.map(section => ({
+                cat: section.cat,
+                items: section.items.map(itemObj => ({
+                    text: itemObj.t.replace("عدد الأشخاص", currentSettings.count),
+                    icon: itemObj.i,
+                    assignee: ""
+                }))
+            }));
             isEditing = false; renderList(); nextScreen('list-screen');
         }
 
-        // --- LIST RENDERING ---
+        // --- RENDER ---
         function renderList() {
             const container = document.getElementById('list-container');
             container.innerHTML = "";
             const editBtn = document.getElementById('edit-btn');
             
-            if(isEditing) {
-                editBtn.classList.add('active-edit');
-                editBtn.innerHTML = "✅ تم";
-            } else {
-                editBtn.classList.remove('active-edit');
-                editBtn.innerHTML = "✏️ تعديل";
-            }
+            if(isEditing) { editBtn.classList.add('active-edit'); editBtn.innerHTML = "✅ تم"; } 
+            else { editBtn.classList.remove('active-edit'); editBtn.innerHTML = "✏️ تعديل"; }
 
             activeList.forEach((section, secIdx) => {
                 let html = `<div class="list-section"><div class="section-title">${section.cat}</div>`;
                 section.items.forEach((item, itemIdx) => {
-                    html += `<div class="list-item">
-                                <div class="item-content">`;
+                    html += `<div class="list-item"><div class="item-content">`;
                     
+                    // RENDER ICON LOGIC
+                    let iconHtml = '';
+                    if(item.icon.startsWith('data:')) {
+                        // User uploaded image
+                        iconHtml = `<img src="${item.icon}" class="custom-img-icon">`;
+                    } else if (CUSTOM_ICONS[item.icon]) {
+                        // Custom SVG Key
+                        iconHtml = CUSTOM_ICONS[item.icon];
+                    } else {
+                        // Regular Emoji
+                        iconHtml = item.icon;
+                    }
+
                     if(isEditing) {
-                        // EDIT MODE: Icon Button + Text Input
-                        html += `<span class="item-icon editable" onclick="openIconModal(${secIdx}, ${itemIdx})">${item.icon}</span>
+                        html += `<span class="item-icon editable" onclick="openIconModal(${secIdx}, ${itemIdx})">${iconHtml}</span>
                                  <input type="text" class="item-input-edit" value="${item.text}" oninput="updateItemText(${secIdx}, ${itemIdx}, this.value)">`;
                     } else {
-                        // VIEW MODE: Icon + Text
-                        html += `<span class="item-icon">${item.icon}</span>
+                        html += `<span class="item-icon">${iconHtml}</span>
                                  <span class="item-text">${item.text}</span>`;
                     }
-                    
-                    html += `</div>`;
+                    html += `</div>
+                            <input type="text" class="assignee-input" placeholder="مين؟" value="${item.assignee}" oninput="updateAssignee(${secIdx}, ${itemIdx}, this.value)">`;
 
-                    // Assignee Field
-                    html += `<input type="text" class="assignee-input" placeholder="مين؟" 
-                             value="${item.assignee}" oninput="updateAssignee(${secIdx}, ${itemIdx}, this.value)">`;
-
-                    // Actions
-                    if(isEditing) {
-                        html += `<span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">✕</span>`;
-                    } else {
-                        html += `<input type="checkbox" style="width:20px; height:20px;">`;
-                    }
+                    if(isEditing) { html += `<span class="delete-btn" onclick="deleteItem(${secIdx}, ${itemIdx})">✕</span>`; } 
+                    else { html += `<input type="checkbox" style="width:20px; height:20px;">`; }
                     html += `</div>`;
                 });
-
                 if(isEditing) {
                     html += `<div class="add-row">
                                 <input type="text" placeholder="غرض جديد..." class="add-input" id="new-item-${secIdx}">
@@ -416,7 +367,6 @@
             });
         }
 
-        // --- DATA UPDATES ---
         function updateAssignee(secIdx, itemIdx, value) { activeList[secIdx].items[itemIdx].assignee = value; }
         function updateItemText(secIdx, itemIdx, value) { activeList[secIdx].items[itemIdx].text = value; }
         function toggleEditMode() { isEditing = !isEditing; renderList(); }
@@ -427,11 +377,18 @@
             if(val) { activeList[secIdx].items.push({ text: val, icon: "🔹", assignee: "" }); renderList(); }
         }
 
-        // --- ICON MODAL LOGIC ---
+        // --- ICONS & UPLOAD ---
         function populateIconGrid() {
             const grid = document.getElementById('icon-grid');
             grid.innerHTML = "";
-            ICONS_LIST.forEach(icon => {
+            
+            // 1. Add Custom SVGs to grid
+            for(let key in CUSTOM_ICONS) {
+                 grid.innerHTML += `<div class="icon-option" onclick="selectIcon('${key}')">${CUSTOM_ICONS[key]}</div>`;
+            }
+
+            // 2. Add Emojis
+            EMOJI_LIST.forEach(icon => {
                 grid.innerHTML += `<div class="icon-option" onclick="selectIcon('${icon}')">${icon}</div>`;
             });
         }
@@ -439,9 +396,8 @@
             editingItemIndices = { sec: secIdx, item: itemIdx };
             document.getElementById('icon-modal').style.display = 'flex';
         }
-        function closeIconModal(e) {
-            if(e.target.id === 'icon-modal') document.getElementById('icon-modal').style.display = 'none';
-        }
+        function closeIconModal(e) { if(e.target.id === 'icon-modal') document.getElementById('icon-modal').style.display = 'none'; }
+        
         function selectIcon(icon) {
             if (editingItemIndices.sec !== null) {
                 activeList[editingItemIndices.sec].items[editingItemIndices.item].icon = icon;
@@ -450,55 +406,67 @@
             document.getElementById('icon-modal').style.display = 'none';
         }
 
-        // --- COPY LOGIC ---
+        function processImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = new Image();
+                    img.onload = function() {
+                        let canvas = document.createElement('canvas');
+                        let ctx = canvas.getContext('2d');
+                        let MAX_WIDTH = 100; let MAX_HEIGHT = 100;
+                        let width = img.width; let height = img.height;
+                        if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
+                        else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
+                        canvas.width = width; canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+                        selectIcon(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // --- COPY & SAVE ---
         function showCopyModal() { document.getElementById('copy-modal').style.display = 'flex'; }
         function closeCopyModal(e) { if(e.target.id === 'copy-modal') document.getElementById('copy-modal').style.display = 'none'; }
-
+        
         function copyToClipboard(mode) {
             let text = `🏕️ *قائمة كشتة: ${currentSettings.count} أشخاص*\n\n`;
-
             if (mode === 'category') {
-                // COPY BY CATEGORY
                 activeList.forEach(section => {
                     if(section.items.length > 0) {
                         text += `*${section.cat}*\n`;
                         section.items.forEach(item => {
-                            text += `- ${item.icon} ${item.text}`;
-                            if(item.assignee) text += ` (👤 ${item.assignee})`;
-                            text += `\n`;
+                            let icon = item.icon;
+                            // Simplify icons for Text Copy
+                            if(icon.startsWith('data:')) icon = '🖼️';
+                            else if(CUSTOM_ICONS[icon]) icon = '🔸'; 
+                            
+                            text += `- ${icon} ${item.text} ${item.assignee ? '(👤 '+item.assignee+')' : ''}\n`;
                         });
                         text += `\n`;
                     }
                 });
             } else if (mode === 'person') {
-                // COPY BY PERSON
-                let peopleMap = {};
-                let unassigned = [];
-
+                let peopleMap = {}; let unassigned = [];
                 activeList.forEach(section => {
                     section.items.forEach(item => {
+                        let icon = item.icon;
+                        if(icon.startsWith('data:')) icon = '🖼️';
+                        else if(CUSTOM_ICONS[icon]) icon = '🔸'; 
+
                         let name = item.assignee.trim();
                         if(name) {
                             if(!peopleMap[name]) peopleMap[name] = [];
-                            peopleMap[name].push(`${item.icon} ${item.text}`);
-                        } else {
-                            unassigned.push(`${item.icon} ${item.text}`);
-                        }
+                            peopleMap[name].push(`${icon} ${item.text}`);
+                        } else { unassigned.push(`${icon} ${item.text}`); }
                     });
                 });
-
-                for (let person in peopleMap) {
-                    text += `👤 *${person}*\n`;
-                    peopleMap[person].forEach(i => text += `- ${i}\n`);
-                    text += `\n`;
-                }
-
-                if(unassigned.length > 0) {
-                    text += `❓ *غير محدد*\n`;
-                    unassigned.forEach(i => text += `- ${i}\n`);
-                }
+                for (let person in peopleMap) { text += `👤 *${person}*\n`; peopleMap[person].forEach(i => text += `- ${i}\n`); text += `\n`; }
+                if(unassigned.length > 0) { text += `❓ *غير محدد*\n`; unassigned.forEach(i => text += `- ${i}\n`); }
             }
-
             text += `_تم التجهيز عبر تطبيق كشتة_`;
             navigator.clipboard.writeText(text).then(() => {
                 document.getElementById('copy-modal').style.display = 'none';
@@ -506,18 +474,13 @@
             });
         }
 
-        // --- SAVING LOGIC ---
         function saveCurrentList() {
             let name = prompt("وش حاب تسمي القائمة؟", "كشتة الجمعة");
             if(name) {
                 let saved = JSON.parse(localStorage.getItem('keshta_saved') || "[]");
-                saved.push({
-                    id: Date.now(), name: name, date: new Date().toLocaleDateString('ar-SA'),
-                    list: activeList, count: currentSettings.count
-                });
+                saved.push({ id: Date.now(), name: name, date: new Date().toLocaleDateString('ar-SA'), list: activeList, count: currentSettings.count });
                 localStorage.setItem('keshta_saved', JSON.stringify(saved));
-                alert("تم الحفظ بنجاح! ✅");
-                goToHome();
+                alert("تم الحفظ بنجاح! ✅"); goToHome();
             }
         }
         function renderSavedLists() {
@@ -527,27 +490,13 @@
             container.innerHTML = "";
             saved.reverse().forEach((list, index) => {
                 let realIndex = saved.length - 1 - index; 
-                let html = `<div class="saved-item">
-                                <div onclick="loadSavedList(${realIndex})" style="flex:1; cursor:pointer;">
-                                    <div class="saved-info"><h4>${list.name}</h4><span>📅 ${list.date} • 👥 ${list.count}</span></div>
-                                </div>
-                                <button class="delete-saved-btn" onclick="deleteSavedList(${realIndex})">🗑️</button>
-                            </div>`;
+                let html = `<div class="saved-item"><div onclick="loadSavedList(${realIndex})" style="flex:1; cursor:pointer;"><div class="saved-info"><h4>${list.name}</h4><span>📅 ${list.date} • 👥 ${list.count}</span></div></div><button class="delete-saved-btn" onclick="deleteSavedList(${realIndex})">🗑️</button></div>`;
                 container.innerHTML += html;
             });
         }
         function loadSavedList(index) {
             let saved = JSON.parse(localStorage.getItem('keshta_saved'));
-            // Backwards compatibility fix
-            activeList = saved[index].list.map(section => ({
-                cat: section.cat,
-                items: section.items.map(i => ({
-                    text: i.text || i,
-                    icon: i.icon || "🔹", 
-                    assignee: i.assignee || ""
-                }))
-            }));
-            currentSettings.count = saved[index].count;
+            activeList = saved[index].list; currentSettings.count = saved[index].count;
             isEditing = false; renderList(); nextScreen('list-screen');
         }
         function deleteSavedList(index) {
